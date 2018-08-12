@@ -5,7 +5,7 @@ Simple api to check if an (internal) endpoint is up, without exposing data or a 
 
 ### Setup
 1. Clone repo into some location (accessible to webserver)
-2. Create a new backup file in one of this locations: `<repo>/status_api.{yaml|json}`, `/etc/eps.{yaml|json}`
+2. Create a new backup file in one of this locations: `<repo>/eps.{yaml|json}`, `/etc/status_api.{yaml|json}`
     (used in that order, you obviously shouldn't use to global file, if you have multiple instances)
 3. Populate them with a config of this schema: `<api endpoint>: <query url>`
     (**Tip**: Prometheus endpoints are suitable as query url, as this does not leak the metrics, but only the status.)

@@ -1,7 +1,7 @@
 from enum import Enum
 from json import dumps, load
 from logging import Logger, StreamHandler, INFO
-from os.path import exists, dirname, join
+from os.path import exists, dirname, join, abspath
 from sys import stdout
 
 from flask import Flask, Response
@@ -32,7 +32,12 @@ def generate_app(fn, fm=None):
         assert isinstance(url, str), "Query URL has to be of type str (got: \"%s\", " \
                                     "of type \"%s\")" % (url, type(url))
 
-    app = Flask("status-api", template_folder=None, static_folder=None)
+    app = Flask(
+        "status-api",
+        root_path=abspath(join(dirname(__file__), "../..")),
+        template_folder=None,
+        static_folder=None
+    )
 
     logger = Logger(__name__)
     logger.addHandler(StreamHandler(stdout))

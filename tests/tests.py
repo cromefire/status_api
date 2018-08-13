@@ -7,7 +7,8 @@ from time import sleep
 
 
 class TestCase(unittest.TestCase):
-    def import_wsgi(self):
+    @staticmethod
+    def import_wsgi():
         app_spec = spec_from_file_location(
             "status_api.app",
             loader=SourceFileLoader(

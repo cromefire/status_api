@@ -60,8 +60,15 @@ def generate_app(fn, fm=None):
         except ReadTimeout:
             logger.debug("Timeout received from %s" % path)
             return Response(
-                dumps({"status": 408, "msg": "Timeout"}),
-                status=408,
+                dumps({"status": 504, "msg": "Timeout"}),
+                status=504,
+                mimetype="application/json"
+            )
+        except ConnectionError:
+            logger.debug("Bad response code from %s (%s)" % path)
+            return Response(
+                {"status": 503, "msg": "Bad response"},
+                status=503,
                 mimetype="application/json"
             )
         if response.ok:
@@ -82,8 +89,8 @@ def generate_app(fn, fm=None):
         else:
             logger.debug("Bad response code from %s (%s)" % (path, response.status_code))
             return Response(
-                {"status": 400, "msg": "Bad response", "code": response.status_code},
-                status=400,
+                {"status": 502, "msg": "Bad response", "code": response.status_code},
+                status=502,
                 mimetype="application/json"
             )
     return app

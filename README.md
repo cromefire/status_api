@@ -18,11 +18,13 @@ From your frontend you can now hit `<your configured url>/<your configured endpo
 ### Status codes
 - 200: Got a good status, with content
 - 204: Good status, but no content
-- 400: Bad status code from endpoint
-- 404: No such endpoint
-- 408: Timeout while hitting query url
+- 404: No such endpoint _(`code` not returned)_
+- 502: Bad status code from endpoint
+- 503: Connection error _(`code` not returned)_
+- 504: Timeout while hitting query url _(`code` not returned)_
 
-You have to decide which ones are bad for (e.g. 203 can be bad or good)
+You have to decide which ones are bad for you (e.g. 203 can be bad or good)
+     your frontend should handle these
 
 ## Example
 `/path/to/cloned/repo/eps.yaml`:

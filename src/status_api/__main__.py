@@ -55,17 +55,18 @@ def generate_app(fn, fm=None):
                 mimetype="application/json"
             )
 
+        req_url = endpoints[path]
         try:
-            response = get(endpoints[path], timeout=10)
+            response = get(req_url, timeout=10)
         except ReadTimeout:
-            logger.debug("Timeout received from %s" % path)
+            logger.debug("Timeout received from %s" % req_url)
             return Response(
                 dumps({"status": 504, "msg": "Timeout"}),
                 status=504,
                 mimetype="application/json"
             )
         except RequestsConnectionError:
-            logger.debug("Bad response code from %s (%s)" % path)
+            logger.debug("Cannot connect to %s" % req_url)
             return Response(
                 {"status": 503, "msg": "Bad response"},
                 status=503,
@@ -73,21 +74,21 @@ def generate_app(fn, fm=None):
             )
         if response.ok:
             if len(response.content) > 0:
-                logger.debug("Everything okay with %s" % path)
+                logger.debug("Everything okay with %s (%s)" % (req_url, response.status_code))
                 return Response(
                     dumps({"status": 200, "msg": "Okay", "code": response.status_code}),
                     status=200,
                     mimetype="application/json"
                 )
             else:
-                logger.debug("No body from %s" % path)
+                logger.debug("No body from %s (%s)" % (req_url, response.status_code))
                 return Response(
                     dumps({"status": 204, "msg": "Empty body", "code": response.status_code}),
                     status=204,
                     mimetype="application/json"
                 )
         else:
-            logger.debug("Bad response code from %s (%s)" % (path, response.status_code))
+            logger.debug("Bad response code from %s (%s)" % (req_url, response.status_code))
             return Response(
                 {"status": 502, "msg": "Bad response", "code": response.status_code},
                 status=502,

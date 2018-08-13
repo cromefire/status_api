@@ -1,6 +1,6 @@
 import unittest
 # noinspection PyProtectedMember
-from importlib._bootstrap_external import SourceFileLoader
+from importlib.machinery import SourceFileLoader
 from os.path import dirname, join
 from importlib.util import spec_from_file_location, module_from_spec
 from time import sleep

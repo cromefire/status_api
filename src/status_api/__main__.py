@@ -32,7 +32,7 @@ def generate_app(fn, fm=None):
         assert isinstance(url, str), "Query URL has to be of type str (got: \"%s\", " \
                                     "of type \"%s\")" % (url, type(url))
 
-    app = Flask(__name__, template_folder=None, static_folder=None)
+    app = Flask("status-api", template_folder=None, static_folder=None)
 
     logger = Logger(__name__)
     logger.addHandler(StreamHandler(stdout))

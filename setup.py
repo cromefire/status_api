@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='status_api',
-    version='1.1.0',
+    version='1.1.1',
     packages=['status_api'],
     package_dir={'': 'src'},
     url='https://github.com/cromefire/status_api',

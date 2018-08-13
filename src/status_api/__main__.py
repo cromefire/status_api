@@ -5,7 +5,7 @@ from os.path import exists, dirname, join, abspath
 from sys import stdout
 
 from flask import Flask, Response
-from requests import get, ReadTimeout
+from requests import get, ReadTimeout, ConnectionError as RequestsConnectionError
 import yaml
 
 
@@ -64,7 +64,7 @@ def generate_app(fn, fm=None):
                 status=504,
                 mimetype="application/json"
             )
-        except ConnectionError:
+        except RequestsConnectionError:
             logger.debug("Bad response code from %s (%s)" % path)
             return Response(
                 {"status": 503, "msg": "Bad response"},
